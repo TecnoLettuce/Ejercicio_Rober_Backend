@@ -34,7 +34,14 @@ namespace Ejercicio_Rober_Backend
             // Registro de la interfaz y el servicio creado 
             services.AddScoped<IBlobService, BlobService>();
 
-            
+            // Configuración de CORS 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAllOrigins",
+                    builder => builder.AllowAnyOrigin());
+            });
+
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,7 +62,7 @@ namespace Ejercicio_Rober_Backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
-
+            app.UseCors();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

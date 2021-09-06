@@ -1,4 +1,5 @@
 ﻿using Ejercicio_Rober_Backend.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 namespace Ejercicio_Rober_Backend.Controllers
 {
     [ApiController]
+    // [EnableCors]
     [Route("api/[controller]")]
     public class UploadController : ControllerBase
     {
@@ -17,7 +19,7 @@ namespace Ejercicio_Rober_Backend.Controllers
         public UploadController(IBlobService blobService) {
             _blobService = blobService;
         }
-
+        
         [HttpPost(""), DisableRequestSizeLimit]
         public async Task<ActionResult> UploadProfilePicture() {
             IFormFile file = Request.Form.Files[0];
@@ -33,5 +35,8 @@ namespace Ejercicio_Rober_Backend.Controllers
 
             return Ok(new { path = toReturn });
         }
+
+        //Descargar Fichero 
+
     }
 }

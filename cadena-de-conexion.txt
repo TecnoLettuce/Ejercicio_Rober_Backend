@@ -1,0 +1,1 @@
+Cadena de conexión del container --> DefaultEndpointsProtocol=https;AccountName=storageacejerciciorober;AccountKey=2FTje1mZQWjhyPpxNQGW+loKSC4K9pmcBM+AJLObqhAmA1ehcsmDUwZ5TpkaOBpca5Xw6Ser5cgWZILPi7ePcg==;EndpointSuffix=core.windows.net

@@ -1,8 +1,8 @@
-﻿using Azure.Storage.Blobs;
-using System.IO;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace Ejercicio_Rober_Backend.Services
 {
@@ -16,6 +16,8 @@ namespace Ejercicio_Rober_Backend.Services
 
         void CompressFiles(string directoryPath);
 
-        void DeleteBlobByName(string name);
+        bool DeleteBlobByName(string fileName);
+
+        // HttpResponse DeleteBlobByName(string name);
     }
 }

@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Compression;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure;
+﻿using Azure;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.IO.Compression;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Ejercicio_Rober_Backend.Services
 {
@@ -19,18 +16,23 @@ namespace Ejercicio_Rober_Backend.Services
     {
         private readonly BlobServiceClient _blobServiceClient;
 
-        public BlobService(BlobServiceClient blobServiceClient) {
+      //  private HttpResponse httpResponse;
+
+        public BlobService(BlobServiceClient blobServiceClient)
+        {
+           
             _blobServiceClient = blobServiceClient;
         }
 
-        public async Task<Uri> UploadFileBlobAsync(string blobContainerName, Stream content, string contentType, string fileName) {
+        public async Task<Uri> UploadFileBlobAsync(string blobContainerName, Stream content, string contentType, string fileName)
+        {
             var containerClient = GetContainerClient(blobContainerName);
             var blobClient = containerClient.GetBlobClient(fileName);
             await blobClient.UploadAsync(content, new BlobHttpHeaders { ContentType = contentType });
             return blobClient.Uri;
         }
 
-       
+
 
         public async Task<FileStream> DownloadFileBlob(string blobContainerName)
         {
@@ -39,9 +41,10 @@ namespace Ejercicio_Rober_Backend.Services
             Directory.CreateDirectory(downloadPath);
 
             // Opciones de transferencia 
-            var options = new StorageTransferOptions {
+            var options = new StorageTransferOptions
+            {
                 MaximumConcurrency = 8,
-                MaximumTransferSize = 50 * 1024 * 1024                
+                MaximumTransferSize = 50 * 1024 * 1024
             };
 
             BlobContainerClient containerClient = GetContainerClient(blobContainerName);
@@ -82,7 +85,8 @@ namespace Ejercicio_Rober_Backend.Services
          * 
          * Get files from downloads directory
          * */
-        public List<FileStream> GetFilesFromServer() {
+        public List<FileStream> GetFilesFromServer()
+        {
             List<FileStream> ret = new List<FileStream>();
             string directoryPath = "C:\\Proyectos\\Ejercicio_Rober_Backend\\download";
 
@@ -108,11 +112,20 @@ namespace Ejercicio_Rober_Backend.Services
             ZipFile.CreateFromDirectory(directoryPath, "C:\\Proyectos\\Ejercicio_Rober_Backend\\CompressedFiles.zip");
         }
 
-        public void DeleteBlobByName(string name)
-        { 
+        public bool DeleteBlobByName(string name)
+        {
+            
             var containerClient = _blobServiceClient.GetBlobContainerClient("primercontenedor");
             BlobClient blobClient = containerClient.GetBlobClient(name);
+
+            if (!blobClient.Exists())
+            {
+                return false;
+            }
+
             blobClient.Delete();
+            
+            return true;
         }
     }
 }

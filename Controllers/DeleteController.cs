@@ -1,10 +1,6 @@
 ﻿using Ejercicio_Rober_Backend.Services;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Ejercicio_Rober_Backend.Services;
 
 namespace Ejercicio_Rober_Backend.Controllers
 {
@@ -13,16 +9,25 @@ namespace Ejercicio_Rober_Backend.Controllers
     public class DeleteController : ControllerBase
     {
         private IBlobService _blobService;
+        //private HttpResponse _httpResponse;
 
-        public DeleteController(IBlobService blobService) {
+        public DeleteController(IBlobService blobService)
+        {
+            
             _blobService = blobService;
         }
 
         [HttpDelete]
         [Route("{name}")]
-        public void DeleteItemByName(string name) {
+        public IActionResult DeleteItemByName(string name)
+        {
             string fileName = name;
-            _blobService.DeleteBlobByName(fileName);
+            if(_blobService.DeleteBlobByName(fileName))
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
     } // Salida de la clase 

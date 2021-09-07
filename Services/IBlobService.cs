@@ -16,6 +16,6 @@ namespace Ejercicio_Rober_Backend.Services
 
         void CompressFiles(string directoryPath);
 
-
+        void DeleteBlobByName(string name);
     }
 }

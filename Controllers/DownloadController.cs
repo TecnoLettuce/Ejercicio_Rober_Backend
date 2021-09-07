@@ -26,10 +26,11 @@ namespace Ejercicio_Rober_Backend.Controllers
             
             FileStream fileStream = await _blobService.DownloadFileBlob("primercontenedor");
             Response.StatusCode = 200;
-            Response.ContentType = "application/json";
+            Response.ContentType = "application/zip";
             Response.Body = fileStream;
             return fileStream;
         }
 
+        // TODO Falta el endpoint de descargar por nombre 
     }
 }

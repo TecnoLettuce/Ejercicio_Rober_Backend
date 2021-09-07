@@ -4,12 +4,14 @@ using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Azure;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Ejercicio_Rober_Backend.Services
 {
@@ -104,6 +106,13 @@ namespace Ejercicio_Rober_Backend.Services
         void IBlobService.CompressFiles(string directoryPath)
         {
             ZipFile.CreateFromDirectory(directoryPath, "C:\\Proyectos\\Ejercicio_Rober_Backend\\CompressedFiles.zip");
+        }
+
+        public void DeleteBlobByName(string name)
+        { 
+            var containerClient = _blobServiceClient.GetBlobContainerClient("primercontenedor");
+            BlobClient blobClient = containerClient.GetBlobClient(name);
+            blobClient.Delete();
         }
     }
 }

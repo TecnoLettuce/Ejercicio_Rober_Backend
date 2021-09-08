@@ -18,6 +18,5 @@ namespace Ejercicio_Rober_Backend.Services
 
         bool DeleteBlobByName(string fileName);
 
-        // HttpResponse DeleteBlobByName(string name);
     }
 }

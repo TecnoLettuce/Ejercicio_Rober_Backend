@@ -21,8 +21,7 @@ namespace Ejercicio_Rober_Backend.Controllers
         [Route("{name}")]
         public IActionResult DeleteItemByName(string name)
         {
-            string fileName = name;
-            if(_blobService.DeleteBlobByName(fileName))
+            if(_blobService.DeleteBlobByName(name))
             {
                 return Ok();
             }
